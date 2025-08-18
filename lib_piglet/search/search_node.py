@@ -72,7 +72,16 @@ def compare_node_g(a: search_node, b: search_node):
 # Return true if a >= b
 def compare_node_f(a: search_node, b: search_node):
     if a.f_ == b.f_:
+
         return a.h_ >= b.h_
+
+        # largest-h
+        return a.h_ >= b.h_
+        # smallest-h
+        #return a.h_ <= b.h_
+        #random
+        #return random.random() < 0.5
+
     return a.f_ >= b.f_
 
 

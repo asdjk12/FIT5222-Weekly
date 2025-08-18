@@ -15,6 +15,7 @@ from lib_piglet.expanders.base_expander import base_expander
 from lib_piglet.domains.grid_action import  Move_Actions, grid_action
 from lib_piglet.constraints.grid_constraints import grid_constraint_table, grid_reservation_table
 from typing import TYPE_CHECKING
+import math
 
 import copy
 if TYPE_CHECKING:
@@ -43,15 +44,24 @@ class grid_expander(base_expander):
         self.succ_.clear()
         curr_state = current.state_       
 
+        
+        LRDF = {
+            Move_Actions.MOVE_UP,
+            Move_Actions.MOVE_DOWN,
+            Move_Actions.MOVE_LEFT,
+            Move_Actions.MOVE_RIGHT,
+        }
+        
+
         for mv in self.get_actions(curr_state):
             nxt_state = self.__move(curr_state, mv)
 
             act = grid_action()           
             act.move_ = mv
+
             act.cost_ = 1                
 
             self.succ_.append((nxt_state, act))
-
         return self.succ_[:]              
 
     # return a list with all the applicable/valid actions

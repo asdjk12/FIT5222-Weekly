@@ -20,13 +20,16 @@ def pigelet_multi_agent_heuristic(domain,current_state, goal_state):
     return h
 
 def manhattan_heuristic(current_state, goal_state):
-    raise NotImplementedError
+    return abs(current_state[0]-goal_state[0]) + abs(current_state[1] - goal_state[1])
 
 def straight_heuristic(current_state, goal_state):
-    raise NotImplementedError
+    temp = math.pow(current_state[0]-goal_state[0],2) + math.pow(current_state[1]-goal_state[1],2) 
+    return math.sqrt(temp)
 
 def octile_heuristic(current_state, goal_state):
-    raise NotImplementedError
+    distance = (abs(current_state[0]-goal_state[0]), abs(current_state[1]-goal_state[1]))
+    temp = math.sqrt(2) * min(distance) + max(distance) - min(distance)
+    return temp
 
 def differential_heuristic(domain, current_state, goal_state):
     raise NotImplementedError

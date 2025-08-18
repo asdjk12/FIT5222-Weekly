@@ -23,7 +23,7 @@ class grid_action:
 
     def __init__(self):
         self.move_ = Move_Actions.MOVE_WAIT
-        self.cost_ = 1
+        self.cost_ = 1.41
 
     def print(self):
         if self.move_ == Move_Actions.MOVE_UP:
