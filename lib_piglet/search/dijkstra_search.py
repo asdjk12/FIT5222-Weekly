@@ -30,7 +30,8 @@ class dijkstra_search(base_search):
         self.max_depth_ = 0
         self.goal_ = target_state
         self.start_time = time.process_time()
-        start_node = self.generate(start_node, None, None)
+        #start_node = self.generate(start_node, None, None)
+        start_node = self.generate(target_state, None, None)
         self.log("source", start_node)
         self.log('destination', self.generate(self.goal_, None, None))
         self.open_list_.push(start_node)
@@ -42,8 +43,10 @@ class dijkstra_search(base_search):
             
             self.nodes_expanded_ += 1
             
-            if self.open_list[-1].depth_ > self.max_depth_:
-                self.max_depth_ = self.open_list[-1].depth_
+            #if self.open_list[-1].depth_ > self.max_depth_:
+            #    self.max_depth_ = self.open_list[-1].depth_
+            if current.depth_ > self.max_depth_:
+                self.max_depth_ = current.depth_
             # If have time_limit, break time out search.
             if self.time_limit_ < sys.maxsize:
                 self.runtime_ = time.process_time() - self.start_time
@@ -81,7 +84,7 @@ class dijkstra_search(base_search):
 
         # OPEN list is exhausted, dijkstra finish
         self.solution_ = self.solution()
-        self.log("solution", self.all_nodes_list_[0])
+        self.log("solution", start_node)
         self.status_ = "Success"
         self.runtime_ = time.process_time() - self.start_time
         return self.solution_

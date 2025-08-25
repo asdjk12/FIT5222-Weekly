@@ -43,8 +43,6 @@ class grid_expander(base_expander):
     def expand(self, current: search_node):
         self.succ_.clear()
         curr_state = current.state_       
-
-        
         LRDF = {
             Move_Actions.MOVE_UP,
             Move_Actions.MOVE_DOWN,
@@ -58,7 +56,8 @@ class grid_expander(base_expander):
 
             act = grid_action()           
             act.move_ = mv
-
+            if mv in LRDF:
+                act.cost_ = math.sqrt(2)                    
             act.cost_ = 1                
 
             self.succ_.append((nxt_state, act))
