@@ -48,6 +48,7 @@ class grid_expander(base_expander):
             Move_Actions.MOVE_DOWN,
             Move_Actions.MOVE_LEFT,
             Move_Actions.MOVE_RIGHT,
+            Move_Actions.MOVE_WAIT,
         }
         
 
@@ -57,9 +58,9 @@ class grid_expander(base_expander):
             act = grid_action()           
             act.move_ = mv
             if mv in LRDF:
-                act.cost_ = math.sqrt(2)                    
-            act.cost_ = 1                
-
+                act.cost_ = 1
+            else:                    
+                act.cost_ = math.sqrt(2)   
             self.succ_.append((nxt_state, act))
         return self.succ_[:]              
 
@@ -78,10 +79,11 @@ class grid_expander(base_expander):
             Move_Actions.MOVE_DOWN,
             Move_Actions.MOVE_LEFT,
             Move_Actions.MOVE_RIGHT,
-            Move_Actions.MOVE_UP_LEFT,
-            Move_Actions.MOVE_UP_RIGHT,
-            Move_Actions.MOVE_DOWN_LEFT,
-            Move_Actions.MOVE_DOWN_RIGHT,
+            Move_Actions.MOVE_WAIT,
+            #Move_Actions.MOVE_UP_LEFT,
+            #Move_Actions.MOVE_UP_RIGHT,
+            #Move_Actions.MOVE_DOWN_LEFT,
+            #Move_Actions.MOVE_DOWN_RIGHT,
         ]
         for ma in candidates:
             nx, ny = self.__move(loc, ma)
@@ -108,6 +110,10 @@ class grid_expander(base_expander):
             return (x, y-1)
         elif move == Move_Actions.MOVE_RIGHT:     
             return (x, y+1)
+        else:                                     
+            return (x,y)
+
+        """
         elif move == Move_Actions.MOVE_UP_LEFT:     
             return (x-1, y-1)
         elif move == Move_Actions.MOVE_UP_RIGHT:     
@@ -116,8 +122,7 @@ class grid_expander(base_expander):
             return (x+1, y-1)
         elif move == Move_Actions.MOVE_DOWN_RIGHT:     
             return (x+1, y+1)
-        else:                                     
-            return (x,y)
+            """
 
     def __str__(self):
         return str(self.domain_)
@@ -126,8 +131,6 @@ class grid_expander(base_expander):
 
 
 class grid_joint_expander(base_expander):
-
-
     def __init__(self, map: gridmap, constraint_table: grid_constraint_table = None):
         self.domain_: gridmap_joint = map
         self.effects_: list = [self.domain_.height_ * -1, self.domain_.height_, -1, 1]
@@ -215,7 +218,7 @@ class grid_joint_expander(base_expander):
             y -= 1
         elif move == Move_Actions.MOVE_RIGHT:
             y += 1
-
+        
         return x, y
 
     def __str__(self):
